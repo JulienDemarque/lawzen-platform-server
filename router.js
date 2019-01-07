@@ -83,7 +83,7 @@ module.exports = function(app) {
               if (userAlreadyVotedUp) {
                 // if already in the list, remove it
                 law.upVotes = law.upVotes.filter(voters => {
-                  voters.username !== user.username;
+                  return voters.username !== user.username;
                 });
               } else {
                 // if not in the list, add the user to the list
