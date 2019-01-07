@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 
 // DB setup
 mongoose.connect(
-  "mongodb://localhost:27017/auth",
+  "mongodb://localhost:27017/lawzen",
   { useNewUrlParser: true }
 );
 

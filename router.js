@@ -8,6 +8,7 @@ const requireAuth = passport.authenticate("jwt", { session: false });
 const requireSignin = passport.authenticate("local", { session: false });
 
 module.exports = function(app) {
+  // Create a new LAW
   app.post("/law", requireAuth, function(req, res) {
     // Great we are getting the data from the form and the user info decoded
     // Now we need to save the law in mongodb... :)
@@ -22,6 +23,7 @@ module.exports = function(app) {
         //Create the law
         const lawObj = {
           title: req.body.lawTitle,
+          createdAt: new Date().getTime(),
           description: req.body.lawDescription,
           author: { id: user._id, username: user.username }
         };
@@ -39,6 +41,23 @@ module.exports = function(app) {
     });
     res.send({ hi: "there Jul" });
   });
+
+  //Get recent LAWS
+  app.get("/recent", function(req, res) {
+    Law.find({}, function(err, allLaws) {
+      if (err) {
+        console.log(err);
+      } else {
+        const fiveMostRecentLaws = allLaws
+          .sort((a, b) => {
+            return a.createdAt < b.createdAt;
+          })
+          .slice(0, 5);
+        res.send(fiveMostRecentLaws);
+      }
+    });
+  });
+
   app.post("/signin", requireSignin, Authentication.signin);
   app.post("/signup", Authentication.signup);
 };

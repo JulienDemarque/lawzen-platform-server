@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 var lawSchema = mongoose.Schema({
   title: String,
   description: String,
+  createdAt: Number,
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
