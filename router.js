@@ -58,6 +58,24 @@ module.exports = function(app) {
       });
   });
 
+  //Get top LAWS
+  app.get("/top", function(req, res) {
+    Law.find({})
+      .populate("upVotes", "username", User)
+      .exec(function(err, allLaws) {
+        if (err) {
+          console.log(err);
+        } else {
+          const fiveTopLaws = allLaws
+            .sort((a, b) => {
+              return a.upVotes.length < b.upVotes.length;
+            })
+            .slice(0, 5);
+          res.send(fiveTopLaws);
+        }
+      });
+  });
+
   // Upvote a LAW
   app.post("/upvote/:lawTitle", requireAuth, function(req, res) {
     console.log("req.body", req.body);
