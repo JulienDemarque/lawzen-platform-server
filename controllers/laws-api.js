@@ -1,6 +1,7 @@
 const Law = require("../models/law");
 const User = require("../models/user");
 
+// POST New Law
 exports.postNewLaw = function(req, res) {
   //find the user
   User.findOne({ email: req.user.email }, function(err, user) {
@@ -28,6 +29,20 @@ exports.postNewLaw = function(req, res) {
   res.send({ hi: "there Jul" });
 };
 
+// GET Single Law
+exports.getSingleLaw = function(req, res) {
+  Law.findOne({ title: req.params.title })
+    .populate("upVotes", "username", User)
+    .exec(function(err, law) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(law);
+      }
+    });
+};
+
+// GET Recent Laws Per Page
 exports.getRecentPerPage = function(req, res) {
   const page = req.params.page;
   const beginning = (page - 1) * 5;
@@ -48,6 +63,7 @@ exports.getRecentPerPage = function(req, res) {
     });
 };
 
+// GET Top Laws Per Page
 exports.getTopPerPage = function(req, res) {
   const page = req.params.page;
   const beginning = (page - 1) * 5;
@@ -67,6 +83,7 @@ exports.getTopPerPage = function(req, res) {
     });
 };
 
+// GET 5 Recent Laws
 exports.getFiveRecent = function(req, res) {
   Law.find({})
     .populate("upVotes", "username", User)
@@ -84,6 +101,7 @@ exports.getFiveRecent = function(req, res) {
     });
 };
 
+// GET 5 Top Laws
 exports.getTopFive = function(req, res) {
   Law.find({})
     .populate("upVotes", "username", User)
@@ -105,6 +123,7 @@ exports.getTopFive = function(req, res) {
     });
 };
 
+// POST Upvote (or downvote) Law
 exports.upvoteLaw = function(req, res) {
   console.log("req.body", req.body);
   console.log("req.user", req.user);

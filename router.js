@@ -13,6 +13,9 @@ module.exports = function(app) {
   // Create a new LAW
   app.post("/law", requireAuth, LawAPI.postNewLaw);
 
+  // Get a single LAW
+  app.get("/law/single/:title", LawAPI.getSingleLaw);
+
   //Get recent LAWS
   app.get("/recent/pages/:page", LawAPI.getRecentPerPage);
 
