@@ -4,13 +4,17 @@ const http = require("http");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+require('dotenv').config()
+const config = require("./config")
 const router = require("./router");
 
 const app = express();
 
+console.log(config)
+
 // DB setup
 mongoose.connect(
-  "mongodb://localhost:27017/lawzen",
+  config.DATABASE_URI,
   { useNewUrlParser: true }
 );
 
