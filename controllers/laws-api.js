@@ -37,6 +37,7 @@ exports.getSingleLaw = function(req, res) {
       if (err) {
         console.log(err);
       } else {
+        console.log("law line 40 laws-api", law)
         res.send(law);
       }
     });
