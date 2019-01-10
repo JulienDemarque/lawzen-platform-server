@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "author": "Julien Demarque <juliendemarquedev@gmail.com> (https://compassionate-pike-0a76d4.netlify.com/)",
